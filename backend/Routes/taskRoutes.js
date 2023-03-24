@@ -1,10 +1,9 @@
 const { TaskModel } = require("../Model/task.model");
-
 const express = require("express");
-
 const TaskRoutes = express.Router();
-
+const { Authentication } = require("../Middelware/authentication");
 TaskRoutes.use(express.json());
+TaskRoutes.use(Authentication);
 
 TaskRoutes.get("/:id", async (req, res) => {
   let id = req.params.id;
