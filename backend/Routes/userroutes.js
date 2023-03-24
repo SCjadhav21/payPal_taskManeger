@@ -54,3 +54,5 @@ UserRoutes.post("/login", async (req, res) => {
     res.send("Something went wrong");
   }
 });
+
+module.exports = { UserRoutes };
