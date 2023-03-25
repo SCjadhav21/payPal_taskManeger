@@ -23,7 +23,7 @@ const Signup = () => {
     const { Full_Name, Email, Password } = user;
 
     axios
-      .post("http://localhost:4500/signup", {
+      .post("https://plum-grumpy-bluefish.cyclic.app/signup", {
         Full_Name,
         Email,
         Password,

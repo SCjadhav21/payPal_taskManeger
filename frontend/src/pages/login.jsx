@@ -22,7 +22,7 @@ const Login = () => {
     const { Email, Password } = user;
 
     axios
-      .post("http://localhost:4500/login", {
+      .post("https://plum-grumpy-bluefish.cyclic.app/login", {
         Email,
         Password,
       })
@@ -67,7 +67,6 @@ const Login = () => {
       ...user,
       [name]: value,
     });
-    console.log(user);
   };
 
   if (nav) {

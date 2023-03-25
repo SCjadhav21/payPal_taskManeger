@@ -18,7 +18,7 @@ TaskRoutes.get("/all", async (req, res) => {
 TaskRoutes.get("/bug", async (req, res) => {
   let userId = req.body.UserId;
   try {
-    let task = await TaskModel.find({ TaskType: "Bug", UserId: userId });
+    let task = await TaskModel.find({ TaskType: "bug", UserId: userId });
     res.send(task);
   } catch (err) {
     res.send("Something went wrong");
@@ -27,7 +27,7 @@ TaskRoutes.get("/bug", async (req, res) => {
 TaskRoutes.get("/story", async (req, res) => {
   let userId = req.body.UserId;
   try {
-    let task = await TaskModel.find({ TaskType: "Story", UserId: userId });
+    let task = await TaskModel.find({ TaskType: "story", UserId: userId });
     res.send(task);
   } catch (err) {
     res.send("Something went wrong");
@@ -36,7 +36,7 @@ TaskRoutes.get("/story", async (req, res) => {
 TaskRoutes.get("/feature", async (req, res) => {
   let userId = req.body.UserId;
   try {
-    let task = await TaskModel.find({ TaskType: "Feature", UserId: userId });
+    let task = await TaskModel.find({ TaskType: "feature", UserId: userId });
     res.send(task);
   } catch (err) {
     res.send("Something went wrong");
@@ -59,7 +59,7 @@ TaskRoutes.get("/bug/:status", async (req, res) => {
   try {
     let task = await TaskModel.find({
       TaskStatus: status,
-      TaskType: "Bug",
+      TaskType: "bug",
       UserId: userId,
     });
     res.send(task);
@@ -73,7 +73,7 @@ TaskRoutes.get("/story/:status", async (req, res) => {
   try {
     let task = await TaskModel.find({
       TaskStatus: status,
-      TaskType: "Story",
+      TaskType: "story",
       UserId: userId,
     });
     res.send(task);
@@ -87,7 +87,7 @@ TaskRoutes.get("/feature/:status", async (req, res) => {
   try {
     let task = await TaskModel.find({
       TaskStatus: status,
-      TaskType: "Feature",
+      TaskType: "feature",
       UserId: userId,
     });
     res.send(task);
@@ -124,6 +124,7 @@ TaskRoutes.patch("/:id", async (req, res) => {
   let userId = req.body.UserId;
   const id = req.params.id;
   const payload = req.body;
+  console.log(req.body);
   try {
     await TaskModel.findOneAndUpdate(
       { _id: id, UserId: userId },
