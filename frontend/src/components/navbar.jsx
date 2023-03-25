@@ -24,25 +24,28 @@ const Navbar = () => {
   const [user, setUser] = useState();
   let [data0, setData] = useState({
     name: "",
-
     email: "",
   });
   useEffect(() => {
     let token = localStorage.getItem("token");
-    let userData = JSON.parse(localStorage.getItem("userData"));
+    if (token !== null && token !== "") {
+      let userData = JSON.parse(localStorage.getItem("userData"));
 
-    let data = userData.name.trim().split(" ");
-    let bag = "";
-    for (let i = 0; i < data.length; i++) {
-      bag += data[i][0].toUpperCase();
+      let data = userData?.name?.trim().split(" ");
+      let bag = "";
+      for (let i = 0; i < data.length; i++) {
+        bag += data[i][0].toUpperCase();
+      }
+      setUser(bag);
+
+      setToken(token);
     }
-    setUser(bag);
-
-    setToken(token);
   }, [path]);
   useEffect(() => {
     let userData = JSON.parse(localStorage.getItem("userData"));
-    setData({ ...data0, name: userData.name, email: userData.email });
+    if (userData !== null && userData !== "") {
+      setData({ ...data0, name: userData.name, email: userData.email });
+    }
   }, [token]);
   const handleLogout = () => {
     localStorage.removeItem("token");
