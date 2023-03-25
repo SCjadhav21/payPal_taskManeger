@@ -41,8 +41,12 @@ UserRoutes.post("/login", async (req, res) => {
           res.send("something went wrong");
         } else if (result) {
           const token = jwt.sign({ userId: user._id }, process.env.key);
-
-          res.send({ res: "Login Successfull", token: token });
+          
+          res.send({
+            res: "Login Successfull",
+            token: token,
+            data: { name: user.Full_Name, email: user.Email },
+          });
         } else {
           res.send("Invalid Credentials");
         }

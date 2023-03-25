@@ -7,7 +7,7 @@ const Authentication = (req, res, next) => {
     if (err) {
       res.send({ massage: err.message, alert: "you are not logged in" });
     } else {
-      req.body.userId = decoded.userId;
+      req.body.UserId = decoded.userId;
       next();
     }
   });

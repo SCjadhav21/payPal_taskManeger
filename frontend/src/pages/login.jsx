@@ -38,6 +38,7 @@ const Login = () => {
               isClosable: true,
             });
             localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userData", JSON.stringify(res.data.data));
             setNav(true);
           } else {
             toast({

@@ -10,11 +10,11 @@ require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 
-app.use("/", UserRoutes, (req, res) => {
+app.use("/task", TaskRoutes, (req, res) => {
   res.sendStatus(404);
 });
 
-app.use("/task", TaskRoutes, (req, res) => {
+app.use("/", UserRoutes, (req, res) => {
   res.sendStatus(404);
 });
 

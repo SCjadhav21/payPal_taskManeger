@@ -5,11 +5,103 @@ const { Authentication } = require("../Middelware/authentication");
 TaskRoutes.use(express.json());
 TaskRoutes.use(Authentication);
 
-TaskRoutes.get("/:id", async (req, res) => {
+TaskRoutes.get("/all", async (req, res) => {
+  let userId = req.body.UserId;
+  try {
+    let task = await TaskModel.find({ UserId: userId });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+
+TaskRoutes.get("/bug", async (req, res) => {
+  let userId = req.body.UserId;
+  try {
+    let task = await TaskModel.find({ TaskType: "Bug", UserId: userId });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+TaskRoutes.get("/story", async (req, res) => {
+  let userId = req.body.UserId;
+  try {
+    let task = await TaskModel.find({ TaskType: "Story", UserId: userId });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+TaskRoutes.get("/feature", async (req, res) => {
+  let userId = req.body.UserId;
+  try {
+    let task = await TaskModel.find({ TaskType: "Feature", UserId: userId });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+
+TaskRoutes.get("/all/:status", async (req, res) => {
+  let userId = req.body.UserId;
+  const status = req.params.status;
+  try {
+    let task = await TaskModel.find({ TaskStatus: status, UserId: userId });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+TaskRoutes.get("/bug/:status", async (req, res) => {
+  let userId = req.body.UserId;
+  const status = req.params.status;
+  try {
+    let task = await TaskModel.find({
+      TaskStatus: status,
+      TaskType: "Bug",
+      UserId: userId,
+    });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+TaskRoutes.get("/story/:status", async (req, res) => {
+  let userId = req.body.UserId;
+  const status = req.params.status;
+  try {
+    let task = await TaskModel.find({
+      TaskStatus: status,
+      TaskType: "Story",
+      UserId: userId,
+    });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+TaskRoutes.get("/feature/:status", async (req, res) => {
+  let userId = req.body.UserId;
+  const status = req.params.status;
+  try {
+    let task = await TaskModel.find({
+      TaskStatus: status,
+      TaskType: "Feature",
+      UserId: userId,
+    });
+    res.send(task);
+  } catch (err) {
+    res.send("Something went wrong");
+  }
+});
+
+TaskRoutes.get("/getById/:id", async (req, res) => {
+  let userId = req.body.UserId;
   let id = req.params.id;
 
   try {
-    const task = await TaskModel.findOne({ _id: id });
+    const task = await TaskModel.findOne({ _id: id, UserId: userId });
     res.send(task);
   } catch (err) {
     res.send("Something went wrong");
@@ -17,10 +109,11 @@ TaskRoutes.get("/:id", async (req, res) => {
 });
 
 TaskRoutes.delete("/:id", async (req, res) => {
+  let userId = req.body.UserId;
   let id = req.params.id;
 
   try {
-    const task = await TaskModel.findOneAndDelete({ _id: id });
+    const task = await TaskModel.findOneAndDelete({ _id: id, UserId: userId });
     res.send(`task data with id:${id} is deleted`);
   } catch (err) {
     res.send("Something went wrong");
@@ -28,10 +121,14 @@ TaskRoutes.delete("/:id", async (req, res) => {
 });
 
 TaskRoutes.patch("/:id", async (req, res) => {
+  let userId = req.body.UserId;
   const id = req.params.id;
   const payload = req.body;
   try {
-    await TaskModel.findOneAndUpdate({ _id: id }, { ...payload });
+    await TaskModel.findOneAndUpdate(
+      { _id: id, UserId: userId },
+      { ...payload }
+    );
 
     res.send(`task data with id:${id} is updated`);
   } catch (err) {
